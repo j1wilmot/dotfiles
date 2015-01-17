@@ -1,6 +1,6 @@
 # Prompt
-__git_ps1 () 
-{ 
+__git_ps1 ()
+{
   local b="$(git symbolic-ref HEAD 2>/dev/null)";
   if [ -n "$b" ]; then
     printf " (%s)" "${b##refs/heads/}";
@@ -11,6 +11,27 @@ YELLOW="\[\033[0;33m\]"
 GREEN="\[\033[0;32m\]"
 PS1="$RED\$(date +%H:%M) \w$YELLOW \$(__git_ps1)$GREEN\$ "
 unset RED YELLOW GREEN
+
+# set CDPATH
+export CDPATH=.:$HOME:$HOME/Coding/work/punchbowl
+
+# History
+#https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps
+HISTSIZE=5000
+HISTFILESIZE=10000
+# Append to historyfile rather than overwrite at session end
+shopt -s histappend
+# immediately add every command to history, rather than after session closes
+# useful when dealing with multiple sessions
+#export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+# Ensure we don't use suspend (CTRL-s)
+# not working as expected
+#stty -ixoff
+
+# aliases
+alias ip='ifconfig | grep broad | cut -f2 -d" "'
+alias script="echo You probably dont want to use 'script'"
 
 # Directories
 WORK="cd ~/Coding/work"
@@ -30,7 +51,7 @@ alias mkdir='mkdir -p'
 
 alias h='history'
 alias j='jobs -l'
-alias which='type -a'
+alias which='type -p'
 alias ..='cd ..'
 alias cd..='cd ..'
 
@@ -41,8 +62,9 @@ alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
 alias du='du -kh'    # Makes a more readable output.
 alias df='df -kTh'
 
-#alias less='less -R' # Interpret colors
+# less
 alias les='less' # help with mis-typing less
+export LESS="-R" # Interpret colors
 
 # Less Colors for Man Pages
 #export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
@@ -79,6 +101,8 @@ alias la='ll -A'           #  Show hidden files.
 #--------------------#
 alias g="git"
 alias gs="git status"
+alias gp="git pull --rebase"
+alias gl="git log"
 
 export EDITOR=vim
 
@@ -94,3 +118,8 @@ export PATH=/usr/local/sbin:$PATH          # /usr/local/sbin used by rabbitmq
 # Node path #
 #############
 export NODE_PATH=/usr/local/share/npm/lib/node_modules
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+alias b=bundle
+alias be='bundle exec'
