@@ -109,10 +109,10 @@ export EDITOR=vim
 ########
 # PATH #
 ########
-export PATH=$HOME/bin:$PATH                # Add my bin
 export PATH=/usr/local/share/npm/bin:$PATH # Add npm bin to path for node
 export PATH=/usr/local/bin:$PATH           # /usr/local/bin used by homebrew
 export PATH=/usr/local/sbin:$PATH          # /usr/local/sbin used by rabbitmq
+export PATH=$HOME/bin:$PATH                # Add my bin as override
 
 #############
 # Node path #
@@ -123,3 +123,4 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 alias b=bundle
 alias be='bundle exec'
+alias ctagsrails='ctags -R --languages=ruby --exclude=.git --exclude=log . $(bundle list --paths)'
